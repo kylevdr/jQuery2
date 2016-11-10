@@ -47,6 +47,53 @@ $(document).ready(function() {
         task.remove();
     };
 
+    var saveList = function() {
+        localStorage.setItem("listo", JSON.stringify(listo));
+    };
+
+    var loadList = function() {
+        listo = JSON.parse(localStorage.getItem("listo"));
+        for (var i = 0; i < listo.length; i++) {
+            if (listo[i].id === "new") {
+                $('#newList').append(
+                            '<a href="#finish" class="" id="item">' +
+                            '<li class="list-group-item">' +
+                            '<h3>' + listo[i].task + '</h3>'+
+                            '<span class="arrow pull-right">' +
+                            '<i class="glyphicon glyphicon-arrow-right">' +
+                            '</span>' +
+                            '</li>' +
+                            '</a>'
+                        );
+
+            } else if (listo[i].id === "inProgress") {
+                $('#in-progress-list').append(
+                            '<a href="#finish" class="" id="inProgress">' +
+                            '<li class="list-group-item">' +
+                            '<h3>' + listo[i].task + '</h3>'+
+                            '<span class="arrow pull-right">' +
+                            '<i class="glyphicon glyphicon-arrow-right">' +
+                            '</span>' +
+                            '</li>' +
+                            '</a>'
+                        );
+
+            } else if (listo[i].id === "archived") {
+                $('#archived-list').append(
+                            '<a href="#finish" class="" id="archived">' +
+                            '<li class="list-group-item">' +
+                            '<h3>' + listo[i].task + '</h3>'+
+                            '<span class="arrow pull-right">' +
+                            '<i class="glyphicon glyphicon-arrow-right">' +
+                            '</span>' +
+                            '</li>' +
+                            '</a>'
+                        );
+
+            }
+        }
+    };
+
     $('#saveNewItem').on('click', function (e) {
         e.preventDefault();
         var task = $('#newItemInput').val().trim();
@@ -84,6 +131,11 @@ $(document).ready(function() {
         var task = this;
         advanceTask(task);
     });
+
+    $(".save-button").on('click', saveList);
+
+    $(".load-button").on('click', loadList);
+    
 
 
 });
